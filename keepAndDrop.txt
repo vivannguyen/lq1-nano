@@ -1,0 +1,14 @@
+drop CaloMET*
+drop ChsMET*
+drop FatJet*
+drop HLT*
+keep HLT_Ele*
+keep HLT_Pho*
+drop HTXS*
+drop Photon*
+drop Puppi*
+drop RawMET*
+drop Soft*
+drop Tau*
+drop TkMET*
+
