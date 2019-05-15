@@ -50,6 +50,7 @@ print "isMC = ",isMC,"era = ",era, "dataRun = ",dataRun
 
 modulesToRun = []
 #modulesToRun.append( pdfWeightProducer() ) 
+jsonFile=None
 
 if isMC:
     if era == "2016":
@@ -60,8 +61,9 @@ if isMC:
         modulesToRun.extend([puAutoWeight_2018(),jetmetUncertainties2017All(),btagSFProducer("2018","deepcsv")])
 else:
     if era == "2016":
-        pass
+        jsonFile='/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions16/13TeV/ReReco/Final/Cert_271036-284044_13TeV_23Sep2016ReReco_Collisions16_JSON.txt'
     elif era == "2017":
+        jsonFile='/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions17/13TeV/ReReco/Cert_294927-306462_13TeV_EOY2017ReReco_Collisions17_JSON.txt'
         if dataRun == "B":
             modulesToRun.extend([jetRecalib2017B()])
         if dataRun == "C":
@@ -72,13 +74,20 @@ else:
             modulesToRun.extend([jetRecalib2017E()])
         if dataRun == "F":
             modulesToRun.extend([jetRecalib2017F()])
+    elif era == "2018":
+        jsonFile='/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'
+        #FIXME TODO
+    else:
+        print 'ERROR: Did not understand the given era!  Should be one of 2016,2017,2018. Quitting.'
+        exit(-1)
 
 modulesToRun.append(eventCounterHistogramModule())
 
-preselection="(Electron_scEnergy[0]/cosh(Electron_scEta[0]))>50"
+# Require SCEt > 35 and passing HEEP ID
+preselection="(Electron_caloEnergy[0]/cosh(Electron_scEta[0]))>35 && Electron_cutBased_HEEP[0]==1"
 
 files=['root://eoscms.cern.ch//eos/cms/store/group/phys_exotica/leptonsPlusJets/LQ/customNano/scooper/DYJetsToLL_Zpt-0To50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/LQ_ext1/190412_070908/0000/DYJetsToLL_Zpt-0To50_1-1.root']
 
 
-p=PostProcessor(".",files,cut=preselection,branchsel='keepAndDrop.txt',modules=modulesToRun,provenance=True,fwkJobReport=True)
+p=PostProcessor(".",files,cut=preselection,branchsel='keepAndDrop.txt',modules=modulesToRun,provenance=True,fwkJobReport=True,jsonInput=jsonFile)
 p.run()
