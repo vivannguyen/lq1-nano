@@ -14,7 +14,7 @@ class eventCounterHistogramProducer(Module):
         pass
 
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
-        self.h_count = ROOT.TH1F("EventCounter","Event Counter",4,-0.5,3.5)
+        self.h_count = ROOT.TH1I("EventCounter","Event Counter",4,-0.5,3.5)
         self.h_count.GetXaxis().SetBinLabel(1,"all events")
         self.h_count.GetXaxis().SetBinLabel(2,"passed")
         self.h_count.GetXaxis().SetBinLabel(3,"sum of amc@NLO weights")
