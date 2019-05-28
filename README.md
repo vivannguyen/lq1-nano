@@ -8,3 +8,5 @@
     cd PhysicsTools/NanoAODTools
     scram b
 
+### batch postprocessing example
+    python launchAnalysis_batch_postProcessor.py -i inputListAllCurrent.txt -o 2016LooseEleSkim -q longlunch -d /eos/user/s/scooper/LQ/Nano/2016LooseEleSkim -m root://eosuser.cern.ch -r 2016 --exe ./doSkim.py -j 500
