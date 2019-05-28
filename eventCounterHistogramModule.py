@@ -14,14 +14,14 @@ class eventCounterHistogramProducer(Module):
         pass
 
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
-        self.h_count = ROOT.TH1I("EventCounter","Event Counter",4,-0.5,3.5)
+        self.h_count = ROOT.TH1F("EventCounter","Event Counter",4,-0.5,3.5)
         self.h_count.GetXaxis().SetBinLabel(1,"all events")
         self.h_count.GetXaxis().SetBinLabel(2,"passed")
         self.h_count.GetXaxis().SetBinLabel(3,"sum of amc@NLO weights")
         self.h_count.GetXaxis().SetBinLabel(4,"sum of TopPt weights")
-        maxInt = (2**32)/2-1 # for TH1I
+        maxInt = 1e7 # for TH1F (max exact float representation of int)
         entries = inputTree.GetEntriesFast()
-        if entries > maxInt:
+        if entries >= maxInt:
             raise RuntimeError("Had more entries in the tree ["+str(entries)+"] than we can store in the eventCounter histogram bin ["+str(maxInt)+"]!")
         self.h_count.SetBinContent(1,entries)
         runsTree = inputFile.Get("Runs")
