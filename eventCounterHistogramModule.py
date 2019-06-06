@@ -5,7 +5,7 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 
 class eventCounterHistogramProducer(Module):
     def __init__(self):
-        self.passedEvents = 0
+        pass
     
     def beginJob(self):
         pass
@@ -14,6 +14,7 @@ class eventCounterHistogramProducer(Module):
         pass
 
     def beginFile(self, inputFile, outputFile, inputTree, wrappedOutputTree):
+        self.passedEvents = 0
         self.h_count = ROOT.TH1F("EventCounter","Event Counter",4,-0.5,3.5)
         self.h_count.GetXaxis().SetBinLabel(1,"all events")
         self.h_count.GetXaxis().SetBinLabel(2,"passed")
