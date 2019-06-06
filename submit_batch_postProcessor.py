@@ -43,7 +43,8 @@ def WriteSubmitFile(condorFileName):
         # require CentOS7
         condorFile.write('requirements = (OpSysAndVer =?= "CentOS7")\n')
         # make sure the job finishes with exit code 0
-        condorFile.write('on_exit_remove = (ExitBySignal == False) && (ExitCode == 0)\n')
+        #condorFile.write('on_exit_remove = (ExitBySignal == False) && (ExitCode == 0)\n')
+        condorFile.write('max_retries = 3\n')
         condorFile.write('should_transfer_files = YES\n')
         condorFile.write('transfer_output_files = ""\n')
         condorFile.write('transfer_input_files = '+options.executable+',input/input_$(Process).list,'+'\n')
