@@ -25,7 +25,8 @@ def GetFileList(inputList):
                 fileList.append(line.strip())
     else:
         # default file
-        fileList.append('root://eoscms.cern.ch//eos/cms/store/group/phys_exotica/leptonsPlusJets/LQ/customNano/scooper/DYJetsToLL_Zpt-0To50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/LQ_ext1/190412_070908/0000/DYJetsToLL_Zpt-0To50_1-1.root')
+        #fileList.append('root://eoscms.cern.ch//eos/cms/store/group/phys_exotica/leptonsPlusJets/LQ/customNano/scooper/DYJetsToLL_Zpt-0To50_TuneCUETP8M1_13TeV-amcatnloFXFX-pythia8/LQ_ext1/190412_070908/0000/DYJetsToLL_Zpt-0To50_1-1.root')
+        fileList.append('root://eoscms.cern.ch//eos/cms/store/group/phys_exotica/leptonsPlusJets/LQ/customNano/scooper/SinglePhoton/Run2016C-17Jul2018-v1/190412_103959/0000/SinglePhoton_Run2016C-17Jul2018-v1_1-1.root')
     return fileList
 
 
@@ -87,8 +88,8 @@ else:
 
 modulesToRun.append(eventCounterHistogramModule())
 
-# Require SCEt > 35 and passing HEEP ID
-preselection="(Electron_caloEnergy[0]/cosh(Electron_scEta[0]))>35 && Electron_cutBased_HEEP[0]==1"
+# Require SCEt > 35
+preselection="(Electron_caloEnergy[0]/cosh(Electron_scEta[0]))>35"
 keepAndDrop='/afs/cern.ch/user/s/scooper/work/private/cmssw/10212/LQCustomNanoSkim/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/LQ/keepAndDrop.txt'
 files=GetFileList(inputList)
 print 'files=',files
