@@ -150,7 +150,9 @@ def process_input_dir(inputDir, match, filelist, useCERNEOS, eosHost):
         # handle root files with same name, but actually different datasets
         # get the dataset info from the full path
         if 'amcatnloFXFX' in path and not 'amcatnloFXFX' in filename:
-          dataset+='_amcatnloFXFX'
+          dataset+='_amcatnloFXFX' 
+        if 'amcnloFXFX' in path and not 'amcnloFXFX' in filename:
+          dataset+='_amcatnloFXFX' #intentionally adding 'at' for consistancy with 'amcatnlo' tags above
         elif 'madgraphMLM' in path and not 'madgraphMLM' in filename:
           dataset+='_madgraphMLM'
         elif 'pythia8' in path and not 'pythia8' in filename:

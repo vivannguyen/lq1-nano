@@ -11,7 +11,7 @@ eosdir=$2
 ##echo "files on eos: `EOS_MGM_URL=root://eosuser.cern.ch eos find -f $eosdir | grep -v '.sys.v#.' | wc -l`"
 
 dirlist=`find $localdir -maxdepth 1 -type d | tail -n +2`
-#echo $dirlist
+#echo 'dirlist'$dirlist
 declare -i numOKDatasets=0
 declare -i numBadDatasets=0
 declare -i numDatasets=0
@@ -28,13 +28,29 @@ do
 
   numDatasets+=1
   numSubmitFiles=`find $dir -iname "submit*sh" | wc | awk '{print $1}'`
+  submitFiles=`find $dir -iname "submit*sh"`
   #numEosFiles=`EOS_MGM_URL=root://eosuser.cern.ch eos find -f $eosdir/${dir##*___} | grep -v '.sys.' | wc -l`
   lastDirWithSuffix=$eosdir/${dir##*/}
   lastDir=${lastDirWithSuffix%___*}
   #echo "eos find -f $lastDir"
   numEosFiles=`eos find -f $lastDir | grep -v '.sys.' | wc -l`
   eosFiles=`eos find -f $lastDir | grep -v '.sys.'`
-  for file in $eosFiles; do
+  eosDirCurrent=`eos find -f $lastDir -type d`
+
+  #This will find any failed jobs and append them to failedJobs.txt
+  for submit in $submitFiles; do
+    submitNoPre=${submit##*_}
+    submitNoExt=${submitNoPre%.*}
+    #echo $submitNoExt
+    check=`eos find -f $lastDir -maxdepth 1 -type f | grep "_$submitNoExt.root"`
+    #echo $submit
+    if [ -z "$check" ]; then
+      echo "$submit" >> failedJobs2017.txt
+      echo "found failed job:" $submit
+    fi
+  done
+
+  for file in $eosFiles; do 
     size=`eos find --size $file | awk -F= '{size+=$3} END {print size/1024/1024}'` # MB
     test=`echo "$size < 1"| bc`
     if [ $test != "0" ]; then
