@@ -89,8 +89,9 @@ else:
 modulesToRun.append(eventCounterHistogramModule())
 
 # Require SCEt > 35
-preselection="(Electron_caloEnergy[0]/cosh(Electron_scEta[0]))>35"
-keepAndDrop='/afs/cern.ch/user/s/scooper/work/private/cmssw/10212/LQCustomNanoSkim/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/LQ/keepAndDrop.txt'
+#preselection="(Electron_caloEnergy[0]/cosh(Electron_scEta[0]))>35"
+preselection="( (((((Muon_pt[0])>17)*((Muon_pt[1])>8))+(((Electron_pt[0])>23)*((Electron_pt[1])>12)))>0)*((Jet_pt[0])>17)*((Jet_pt[1])>17) )"
+keepAndDrop='/afs/cern.ch/work/v/vinguyen/public/LQ2Analysis/CMSSW_10_2_10/src/PhysicsTools/NanoAODTools/python/postprocessing/analysis/LQ/keepAndDrop.txt'
 files=GetFileList(inputList)
 print 'files=',files
 

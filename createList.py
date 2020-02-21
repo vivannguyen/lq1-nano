@@ -121,7 +121,7 @@ def process_input_dir(inputDir, match, filelist, useCERNEOS, eosHost):
         path = prefix+os.path.split(fullfilepath)[0]+'/'
         filename = os.path.split(fullfilepath)[1]
         # hardcoded skip of any muon-related LQ signal or QCD
-        if 'LQToCMu' in path or 'MuEnriched' in path:
+        if 'LQTo' in path or 'GJets' in path or 'Single' in path or 'DYJetsToLL_Pt' in path or 'DYJetsToLL_Zpt' in path or 'WJetsToLNu_Pt' in path or 'WJetsToLNu_Wpt' in path:
             continue
         #print re.search('.root$',filename)
         if re.search('.root$', filename) is None:
